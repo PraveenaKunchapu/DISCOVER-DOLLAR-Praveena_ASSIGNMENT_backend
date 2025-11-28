@@ -1,20 +1,20 @@
 # Use official Node.js image
 FROM node:18
 
-# Create working directory inside container
+# Set work directory inside container
 WORKDIR /usr/src/app
 
-# Copy package files first (for layer caching)
-COPY package.json package-lock.json* ./
+# Copy package.json & lock file from the backend folder
+COPY backend/package*.json ./
 
-# Install backend dependencies
+# Install dependencies
 RUN npm install
 
-# Copy the rest of the backend source code
-COPY . .
+# Copy backend source code into the container
+COPY backend/ .
 
 # Expose backend port
 EXPOSE 8080
 
-# Start the server
+# Start the node server
 CMD ["node", "server.js"]
